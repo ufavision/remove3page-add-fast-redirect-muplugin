@@ -110,43 +110,4 @@ echo "🎯 ทดสอบได้ที่:"
 echo "   https://$DOMAIN/login-2"
 echo "   https://$DOMAIN/register-2"
 echo "   https://$DOMAIN/contact-us-2"
-exit 0  # ← เพิ่มบรรทัดนี้ตอนท้ายสุด
-```
-
----
-
-## ผลลัพธ์ที่ได้
-```
-======================================
-🔍 กำลังค้นหาเว็บ WordPress ทั้งหมด...
-======================================
-🎲 สุ่มได้เว็บ: fifa8989.co
-📋 จากทั้งหมด: 47 เว็บ
-======================================
-✅ username : armadaso
-✅ path     : /home/armadaso/fifa8989.co
-
-🗑️ กำลังลบ Pages...
-  ✅ ลบแล้ว: /login-2 (ID: 42)
-  ✅ ลบแล้ว: /register-2 (ID: 43)
-  ✅ ลบแล้ว: /contact-us-2 (ID: 44)
-
-======================================
-📊 สรุปผลการทำงาน
-======================================
-🎲 เว็บที่สุ่ม     : fifa8989.co
-📁 path           : /home/armadaso/fifa8989.co
-🗑️ ลบหน้าสำเร็จ   : /login-2 /register-2 /contact-us-2
-✅ วางไฟล์         : fast-redirect.php
-
-======================================
-📝 รายชื่อเว็บที่แก้ไขล่าสุด (วันนี้)
-======================================
-1. fifa8989.co
-2. kingland365.pro
-3. fullsloteiei.net
-
-🎯 ทดสอบได้ที่:
-   https://fifa8989.co/login-2
-   https://fifa8989.co/register-2
-   https://fifa8989.co/contact-us-2
+exit 0
