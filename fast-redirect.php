@@ -52,22 +52,3 @@ add_action('muplugins_loaded', function() {
     exit;
 });
 ?>
-```
-
----
-
-## สรุปสิ่งที่เปลี่ยน
-
-| รายการ | เดิม | ใหม่ |
-|---|---|---|
-| ชื่อไฟล์ | `routes.json` | `url-link.json` ✅ |
-| ชื่อตัวแปร | `$routes` | `$url_link` ✅ |
-| ชื่อ cache | `fast-redirect-routes.json` | `fast-redirect-url-link.json` ✅ |
-| URL ดึง json | `.../routes.json` | `.../url-link.json` ✅ |
-
----
-
-## ไฟล์ที่ต้องอัพเดทบน GitHub
-```
-1. สร้างไฟล์ใหม่  → url-link.json
-2. อัพเดทไฟล์เดิม → fast-redirect.php
