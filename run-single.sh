@@ -110,6 +110,7 @@ echo "🎯 ทดสอบได้ที่:"
 echo "   https://$DOMAIN/login-2"
 echo "   https://$DOMAIN/register-2"
 echo "   https://$DOMAIN/contact-us-2"
+exit 0  # ← เพิ่มบรรทัดนี้ตอนท้ายสุด
 ```
 
 ---
