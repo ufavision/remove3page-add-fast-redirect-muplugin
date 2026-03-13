@@ -2,22 +2,29 @@
 /*
 Plugin Name: Fast Redirect (PageSpeed Friendly)
 Description: ระบบ Redirect ความเร็วสูง + ดึง Config จาก GitHub
-Version: 11.0
+Version: 11.1
 */
 add_action('muplugins_loaded', function() {
 
     $path = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
 
     // ===== ดึง url-link.json จาก GitHub (Cache 5 นาที) =====
-    $cache_file = sys_get_temp_dir() . '/fast-redirect-url-link.json';
+    // ใช้ WP_CONTENT_DIR แทน /tmp เพื่อหลีกเลี่ยง Permission Denied บน cPanel+suEXEC
+    $cache_dir  = WP_CONTENT_DIR . '/cache';
+    $cache_file = $cache_dir . '/fast-redirect-url-link.json';
     $cache_time = 300; // 5 นาที
+
+    // สร้างโฟลเดอร์ cache ถ้ายังไม่มี
+    if (!is_dir($cache_dir)) {
+        @mkdir($cache_dir, 0755, true);
+    }
 
     if (!file_exists($cache_file) || (time() - filemtime($cache_file)) > $cache_time) {
         $json = @file_get_contents(
             'https://raw.githubusercontent.com/ufavision/remove3page-add-fast-redirect-muplugin/main/url-link.json'
         );
         if ($json) {
-            file_put_contents($cache_file, $json);
+            @file_put_contents($cache_file, $json);
         }
     }
 
